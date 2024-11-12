@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import EventCard from "./EventCard";
 import events from "../data/events";
 import "./MainDisplay.css";
@@ -6,6 +7,7 @@ import "./MainDisplay.css";
 function MainDisplay() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState("");
+  const navigate = useNavigate();
 
   const handleNext = () => {
     setSlideDirection("slide-left");
@@ -23,6 +25,10 @@ function MainDisplay() {
     }, 300);
   };
 
+  const handleEventClick = () => {
+    navigate(`/event/${events[currentIndex].id}`);
+  };
+
   return (
     <main className="main-display">
       <div className="section-title">
@@ -33,10 +39,12 @@ function MainDisplay() {
 
       <div className="event-section">
         <button className="nav-arrow left" onClick={handlePrev}>←</button>
-        <EventCard 
-          event={events[currentIndex]} 
-          slideDirection={slideDirection}
-        />
+        <div onClick={handleEventClick}>
+          <EventCard 
+            event={events[currentIndex]} 
+            slideDirection={slideDirection}
+          />
+        </div>
         <button className="nav-arrow right" onClick={handleNext}>→</button>
       </div>
 

@@ -1,0 +1,125 @@
+.expenses-section {
+  background-color: var(--accent-purple);
+  border-radius: 25px;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.section-header {
+  margin-bottom: 15px;
+}
+
+.section-header h2 {
+  font-size: 1.2rem;
+  font-weight: normal;
+  color: var(--text-dark);
+}
+
+.expenses-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: var(--accent-purple-dark);
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.expense-icon {
+  font-size: 2rem;
+}
+
+.expense-details {
+  flex: 1;
+}
+
+.expense-amount {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+.expense-label {
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: var(--text-dark);
+  opacity: 0.8;
+}
+
+.expense-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  padding: 10px 15px;
+}
+
+.expense-item.paid {
+  background-color: var(--accent-green);
+}
+
+.expense-item.unpaid {
+  background-color: var(--accent-pink);
+}
+
+.person-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.person-icon {
+  width: 32px;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--text-dark);
+}
+
+.person-name {
+  font-size: 1rem;
+  color: var(--text-dark);
+}
+
+.person-amount {
+  font-size: 1rem;
+  color: var(--text-dark);
+  font-weight: bold;
+}
+
+.add-expense-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--accent-purple-light);
+  border: none;
+  border-radius: 15px;
+  padding: 10px 15px;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.plus-icon {
+  font-size: 1.2rem;
+}
+
+.amount-placeholder {
+  margin-left: auto;
+  opacity: 0.5;
+} 

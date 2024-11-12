@@ -1,0 +1,134 @@
+.grocery-page {
+  padding: 20px;
+  background: #ffe1c6;
+  min-height: 100vh;
+  font-family: "Roboto", sans-serif;
+}
+
+.event-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #545863;
+  position: absolute;
+  left: 0;
+}
+
+.event-date-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.event-date {
+  padding: 8px 24px;
+  border: 2px solid black;
+  border-radius: 12px;
+  font-size: 20px;
+  background: transparent;
+}
+
+.grocery-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.grocery-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.checkbox-wrapper {
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+
+.grocery-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid black;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  position: relative;
+}
+
+.grocery-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.grocery-item-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #d86f6f;
+  padding: 12px 15px;
+  border-radius: 15px;
+  min-height: 48px;
+}
+
+.grocery-item-content.checked {
+  background: #8ed889;
+}
+
+.item-name {
+  font-size: 18px;
+  color: black;
+}
+
+.item-quantity {
+  font-size: 16px;
+  color: black;
+}
+
+.add-item-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #b3b3f1;
+  border: none;
+  border-radius: 15px;
+  padding: 12px 15px;
+  margin-top: 20px;
+  font-size: 16px;
+  color: black;
+  cursor: pointer;
+}
+
+.plus-icon {
+  width: 24px;
+  height: 24px;
+  background: #d9d9d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-placeholder {
+  color: #666;
+}
