@@ -1,12 +1,30 @@
 import { useState } from "react";
+import EventCard from "./EventCard";
+import events from "../data/events";
 import "./MainDisplay.css";
 
 function MainDisplay() {
-  const [currentDate] = useState("Monday, Oct 28th");
-  
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState("");
+
+  const handleNext = () => {
+    setSlideDirection("slide-left");
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev === events.length - 1 ? 0 : prev + 1));
+      setSlideDirection("");
+    }, 300);
+  };
+
+  const handlePrev = () => {
+    setSlideDirection("slide-right");
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev === 0 ? events.length - 1 : prev - 1));
+      setSlideDirection("");
+    }, 300);
+  };
+
   return (
     <main className="main-display">
-      {/* Events Section */}
       <div className="section-title">
         <div className="title-line"></div>
         <div className="title-text">Events</div>
@@ -14,27 +32,12 @@ function MainDisplay() {
       </div>
 
       <div className="event-section">
-        <button className="nav-arrow left">←</button>
-        
-        <div className="event-card">
-          <h2 className="date-header">{currentDate}</h2>
-          <div className="stats-container">
-            <div className="stat-box guests">
-              <span className="stat-number">4</span>
-              <span className="stat-label">Guests</span>
-            </div>
-            <div className="stat-box outstanding">
-              <span className="stat-number">$32</span>
-              <span className="stat-label">Outstanding</span>
-            </div>
-            <div className="stat-box alerts">
-              <span className="stat-number">2</span>
-              <span className="stat-label">Alerts</span>
-            </div>
-          </div>
-        </div>
-
-        <button className="nav-arrow right">→</button>
+        <button className="nav-arrow left" onClick={handlePrev}>←</button>
+        <EventCard 
+          event={events[currentIndex]} 
+          slideDirection={slideDirection}
+        />
+        <button className="nav-arrow right" onClick={handleNext}>→</button>
       </div>
 
       <button className="new-event-button">
@@ -42,7 +45,6 @@ function MainDisplay() {
         New Event
       </button>
 
-      {/* Roommates Section */}
       <div className="section-title">
         <div className="title-line"></div>
         <div className="title-text">Roommates</div>

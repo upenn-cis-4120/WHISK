@@ -41,14 +41,6 @@
   margin: 10px 0;
 }
 
-.event-card {
-  background-color: var(--accent-purple);
-  border-radius: 25px;
-  padding: 15px;
-  width: 100%;
-  max-width: 235px;
-}
-
 .nav-arrow {
   position: relative;
   background-color: rgba(255, 255, 255, 0.8);
@@ -62,13 +54,18 @@
   font-size: 1.2rem;
   color: var(--text-dark);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
   flex-shrink: 0;
   z-index: 1;
 }
 
 .nav-arrow:hover {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+.nav-arrow:active {
+  transform: scale(0.95);
 }
 
 /* Stats */
