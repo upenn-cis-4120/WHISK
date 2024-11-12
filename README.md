@@ -1,6 +1,6 @@
-# CIS 4120 Assignment 1
+# CIS 4120 Assignment 4
 
-Creating a frontend only weather app using Vite + React.
+First prototype of Whisk, a web app that creates potluck experiences for college students.
 
 ## Getting Started
 
@@ -8,12 +8,3 @@ Creating a frontend only weather app using Vite + React.
 2. Run `npm install`
 3. Run `npm run dev`
 
-## React + Vite Mockup
-
-HTML/CSS webapp using React + Vite
-![mockup](./public/mockup.png)
-
-## Initial Concept
-
-"High-fidelity Prototype"
-![proto](./public/proto.png)

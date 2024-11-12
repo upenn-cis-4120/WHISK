@@ -1,41 +1,70 @@
-import React from 'react';
-import CloudIcon from './CloudIcon';
+import { useState } from "react";
+import "./MainDisplay.css";
 
-const MainDisplay = () => {
+function MainDisplay() {
+  const [currentDate] = useState("Monday, Oct 28th");
+  
   return (
-    <div className="main-display">
-      <div className="side-data left-data">
-        <div className="data-item">
-          <span className="label">Rain</span>
-          <div className="rain-chance">0%</div>
-        </div>
-        <div className="data-item">
-          <span className="label">UV Index</span>
-          <div className="uv-index">HIGH</div>
-        </div>
+    <main className="main-display">
+      {/* Events Section */}
+      <div className="section-title">
+        <div className="title-line"></div>
+        <div className="title-text">Events</div>
+        <div className="title-line"></div>
       </div>
-      <div className="temperature">
-        <h2 className="current-temp">
-          68°
-        </h2>
-        <div className="temp-range">
-          <span className="low">52°</span> <span className="high">72°</span>
-        </div>
-      </div>
-      <div className="side-data right-data">
-        <div className="data-item">
-          <span className="label">Conditions</span>
-          <div className="conditions">
-            <CloudIcon/>
+
+      <div className="event-section">
+        <button className="nav-arrow left">←</button>
+        
+        <div className="event-card">
+          <h2 className="date-header">{currentDate}</h2>
+          <div className="stats-container">
+            <div className="stat-box guests">
+              <span className="stat-number">4</span>
+              <span className="stat-label">Guests</span>
+            </div>
+            <div className="stat-box outstanding">
+              <span className="stat-number">$32</span>
+              <span className="stat-label">Outstanding</span>
+            </div>
+            <div className="stat-box alerts">
+              <span className="stat-number">2</span>
+              <span className="stat-label">Alerts</span>
+            </div>
           </div>
         </div>
-        <div className="data-item">
-          <span className="label">Feels Like</span>
-          <div className="feels-like">71°</div>
-        </div>
+
+        <button className="nav-arrow right">→</button>
       </div>
-    </div>
+
+      <button className="new-event-button">
+        <span className="plus-icon">+</span>
+        New Event
+      </button>
+
+      {/* Roommates Section */}
+      <div className="section-title">
+        <div className="title-line"></div>
+        <div className="title-text">Roommates</div>
+        <div className="title-line"></div>
+      </div>
+
+      <div className="nav-buttons">
+        <button className="nav-button financials">
+          <span className="icon">$</span>
+          Financials
+        </button>
+        <button className="nav-button grocery">
+          <span className="icon">≡</span>
+          Grocery List
+        </button>
+        <button className="nav-button calendar">
+          <span className="icon">📅</span>
+          Calendar
+        </button>
+      </div>
+    </main>
   );
-};
+}
 
 export default MainDisplay;

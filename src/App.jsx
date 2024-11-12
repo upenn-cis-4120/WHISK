@@ -1,19 +1,20 @@
-import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import MainDisplay from "./components/MainDisplay";
-import Suggestions from "./components/Suggestions";
-import Forecast from "./components/Forecast";
 import "./App.css";
 
-const App = () => {
+function App() {
   return (
-    <div className="weather-app">
-      <Header/>
-      <MainDisplay/>
-      <Suggestions/>
-      <Forecast/>
-    </div>
+    <Router>
+      <div className="app">
+        <Header />
+        <Routes>
+          <Route path="/" element={<MainDisplay />} />
+          {/* Add more routes as needed */}
+        </Routes>
+      </div>
+    </Router>
   );
-};
+}
 
 export default App;
