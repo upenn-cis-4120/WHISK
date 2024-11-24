@@ -15,7 +15,7 @@
 }
 
 .whisk-text {
-  color: #545863;
+  color: #1E1E1E;
   font-size: 67px;
   font-family: "Orienta", sans-serif;
   font-weight: 400;
@@ -31,7 +31,7 @@
   position: absolute;
   left: 227px;
   top: 25px;
-  background: #545863;
+  background: #1E1E1E;
   border-radius: 9999px;
   transform: rotate(-38.28deg);
   transform-origin: 0 0;
@@ -43,7 +43,7 @@
   position: absolute;
   left: 256px;
   top: 46px;
-  background: #545863;
+  background: #1E1E1E;
   transform: rotate(-45.17deg);
   transform-origin: 0 0;
 }

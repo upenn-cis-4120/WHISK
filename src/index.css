@@ -1,11 +1,11 @@
 :root {
   /* Color variables based on the Figma design */
-  --primary-bg: #FFE1C6;
+  --primary-bg: #fffdfb;
   --accent-purple: #B3B3F1;
   --accent-green: #8ED889;
   --accent-pink: #D86F6F;
   --accent-purple-dark: #BC89D8;
-  --text-dark: #545863;
+  --text-dark: #1E1E1E;
   --border-dark: #1E1E1E;
   
   /* iPhone 13/14 dimensions */

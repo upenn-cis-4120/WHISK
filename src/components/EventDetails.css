@@ -1,6 +1,6 @@
 .event-details {
   padding: 20px;
-  background: #FFE1C6;
+  background: #fffdfb;
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
 }
@@ -17,7 +17,7 @@
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #545863;
+  color: #1E1E1E;
   position: absolute;
   left: 1rem;
 }
@@ -25,14 +25,14 @@
 .whisk-title {
   font-size: 32px;
   margin: 0;
-  color: #545863;
+  color: #1E1E1E;
   font-family: 'Orienta', sans-serif;
   font-weight: 400;
 }
 
 .search-icon {
   font-size: 24px;
-  color: #545863;
+  color: #1E1E1E;
 }
 
 .event-date-container {
