@@ -1,0 +1,30 @@
+.events-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event-link {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.event-link:hover {
+  transform: scale(1.02);
+}
+
+.event-link:hover .event-card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

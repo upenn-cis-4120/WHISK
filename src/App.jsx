@@ -3,6 +3,7 @@ import { useState } from "react";
 import Header from "./components/Header";
 import MainDisplay from "./components/MainDisplay";
 import EventDetails from "./components/EventDetails";
+import Calendar from "./components/EventsPage";
 import GroceryListPage from "./components/event/GroceryListPage";
 import events from "./data/events";
 import "./App.css";
@@ -46,6 +47,16 @@ function App() {
               <GroceryListPage 
                 events={eventsData}
                 onToggleGroceryItem={handleToggleGroceryItem}
+              />
+            } 
+          />
+          <Route 
+            path="/calendar" 
+            element={
+              <Calendar
+                events={eventsData}
+                onToggleGroceryItem={handleToggleGroceryItem}
+                
               />
             } 
           />
