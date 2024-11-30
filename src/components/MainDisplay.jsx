@@ -29,6 +29,10 @@ function MainDisplay() {
     navigate(`/event/${events[currentIndex].id}`);
   };
 
+  const handleEventClickCal = () => {
+    navigate(`/calendar/`);
+  };
+
   return (
     <main className="main-display">
       <div className="section-title">
@@ -68,7 +72,7 @@ function MainDisplay() {
           <span className="icon">≡</span>
           Grocery List
         </button>
-        <button className="nav-button calendar">
+        <button className="nav-button calendar" onClick={handleEventClickCal}>
           <span className="icon">📅</span>
           Calendar
         </button>
