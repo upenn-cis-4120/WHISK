@@ -1,15 +1,14 @@
 import React from "react";
-
-import "./EventCard.css";
+import "./FinanceCard.css";
 
 function FinanceCard({ event }) {
   return (
-    <div className="event-card">
+    <div className="finance-card">
       <h2 className="date-header">{event.date}</h2>
       <div className="stats-container">
         <div className="stat-box guests">
           <span className="stat-number">{event.stats.guests - 1}</span>
-          <span className="stat-label">Needs to Pay</span>
+          <span className="stat-label">Yet to Pay</span>
         </div>
         <div className="stat-box outstanding">
           <span className="stat-number">${event.stats.outstanding}</span>
@@ -20,9 +19,4 @@ function FinanceCard({ event }) {
   );
 }
 
-
-
 export default FinanceCard;
-
-
-
