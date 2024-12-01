@@ -1,6 +1,6 @@
 .grocery-page {
   padding: 20px;
-  background: #fffdfb;
+  background: var(--primary-bg);
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
 }
@@ -17,7 +17,7 @@
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #1E1E1E;
+  color: var(--text-light);
   position: absolute;
   left: 0;
 }
@@ -30,10 +30,11 @@
 
 .event-date {
   padding: 8px 24px;
-  border: 2px solid black;
+  border: 2px solid var(--text-light);
   border-radius: 12px;
   font-size: 20px;
   background: transparent;
+  color: var(--text-light);
 }
 
 .grocery-list {
@@ -84,24 +85,26 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #d86f6f;
+  background: var(--primary-blue);
   padding: 12px 15px;
   border-radius: 15px;
   min-height: 48px;
+  color: var(--text-dark);
 }
 
 .grocery-item-content.checked {
-  background: #8ed889;
+  background: var(--action-green);
+  color: var(--text-dark);
 }
 
 .item-name {
   font-size: 18px;
-  color: black;
+  color: var(--text-dark);
 }
 
 .item-quantity {
   font-size: 16px;
-  color: black;
+  color: var(--text-dark);
 }
 
 .add-item-button {
@@ -109,24 +112,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #b3b3f1;
+  background: var(--secondary-purple);
   border: none;
   border-radius: 15px;
   padding: 12px 15px;
   margin-top: 20px;
   font-size: 16px;
-  color: black;
+  color: var(--text-light);
   cursor: pointer;
 }
 
 .plus-icon {
   width: 24px;
   height: 24px;
-  background: #d9d9d9;
+  background: var(--text-light);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--secondary-purple);
 }
 
 .quantity-placeholder {

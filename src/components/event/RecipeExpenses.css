@@ -1,60 +1,59 @@
 .recipe-expenses-section {
-  background: #8ED889;
+  background: var(--primary-blue);
   border-radius: 25px;
-  border: 1px solid black;
-  padding: 15px;
-  margin: 10px 0;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .section-title {
   font-size: 24px;
-  color: black;
+  color: var(--text-light);
   font-weight: 400;
-  line-height: 28px;
-  margin-bottom: 15px;
+  margin: 0 0 20px 0;
 }
 
 .content-container {
-  background: var(--accent-purple);
+  background: var(--primary-blue);
   border-radius: 15px;
-  padding: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
 }
 
 .recipe-icon {
-  width: 60px;
-  height: 60px;
-  background: #D8A06F;
-  border-radius: 12px;
+  background: var(--secondary-purple);
+  border-radius: 15px;
+  padding: 15px 25px;
+  min-width: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.icon-placeholder {
-  font-size: 32px;
-  line-height: 1;
-}
-
 .expense-box {
-  background: #89C4D8;
-  border-radius: 12px;
-  padding: 10px 20px;
+  background: var(--action-green);
+  border-radius: 15px;
+  padding: 15px 25px;
   text-align: center;
+  min-width: 120px;
 }
 
 .amount {
   font-size: 32px;
-  font-family: 'Orienta', sans-serif;
-  color: black;
+  font-family: "Orienta", sans-serif;
+  color: var(--text-dark);
   font-weight: 400;
+  margin-bottom: 4px;
 }
 
 .label {
   font-size: 14px;
-  font-family: 'Orienta', sans-serif;
-  color: black;
+  font-family: "Orienta", sans-serif;
+  color: var(--text-dark);
   opacity: 0.8;
-} 
+}
+
+.icon-placeholder {
+  font-size: 48px;
+}

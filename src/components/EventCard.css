@@ -1,16 +1,14 @@
 .event-card {
-  background-color: var(--accent-purple);
+  background-color: var(--primary-blue);
   border-radius: 25px;
-  padding: 15px;
+  padding: 15px 20px;
   width: 100%;
-  max-width: 235px;
-  opacity: 1; /* Ensure visibility */
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Smooth transitions if needed */
+  opacity: 1;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 .date-header {
   text-align: center;
-  margin-bottom: 12px;
   font-size: 1.2rem;
   font-weight: normal;
   color: var(--text-dark);
@@ -18,42 +16,45 @@
 
 .stats-container {
   display: flex;
-  justify-content: center;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
   width: 100%;
+  min-height: 70px;
 }
 
 .stat-box {
-  flex: 1;
-  max-width: 80px;
+  flex: 0 1 auto;
+  min-width: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px;
+  padding: 8px 12px;
   border-radius: 15px;
 }
 
 .stat-box.guests {
-  background-color: var(--accent-purple-dark);
+  background-color: var(--secondary-purple);
+  color: var(--text-light);
 }
 
 .stat-box.outstanding {
-  background-color: var(--accent-green);
+  background-color: var(--action-green);
+  color: var(--text-dark);
 }
 
 .stat-box.alerts {
-  background-color: var(--accent-pink);
+  background-color: var(--tertiary-yellow);
+  color: var(--text-dark);
 }
 
 .stat-number {
   font-size: 1.6rem;
   font-weight: bold;
-  color: var(--text-dark);
 }
 
 .stat-label {
   font-size: 0.8rem;
-  color: var(--text-dark);
 }
 
 
@@ -69,9 +70,38 @@
 .events-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* Add spacing between event cards */
+  gap: 20px;
   justify-content: center;
   width: 100%;
   max-width: 800px;
+}
+
+@media (max-width: 320px) {
+  .stats-container {
+    gap: 8px;
+  }
+
+  .stat-box {
+    min-width: 60px;
+    padding: 6px 8px;
+  }
+
+  .stat-number {
+    font-size: 1.4rem;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 321px) and (max-width: 480px) {
+  .stats-container {
+    gap: 10px;
+  }
+
+  .stat-box {
+    min-width: 65px;
+  }
 }
 

@@ -61,6 +61,8 @@ function MainDisplay() {
         New Event
       </button>
 
+      <div className = "section-divider"></div>
+
       <div className="section-title">
         <div className="title-line"></div>
         <div className="title-text">Roommates</div>

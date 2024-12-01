@@ -1,6 +1,6 @@
 .event-details {
   padding: 20px;
-  background: #fffdfb;
+  background: var(--primary-bg);
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
 }
@@ -17,7 +17,7 @@
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #1E1E1E;
+  color: var(--text-light);
   position: absolute;
   left: 1rem;
 }
@@ -25,14 +25,14 @@
 .whisk-title {
   font-size: 32px;
   margin: 0;
-  color: #1E1E1E;
+  color: var(--text-light);
   font-family: 'Orienta', sans-serif;
   font-weight: 400;
 }
 
 .search-icon {
   font-size: 24px;
-  color: #1E1E1E;
+  color: var(--text-light);
 }
 
 .event-date-container {
@@ -45,8 +45,9 @@
 
 .event-date {
   padding: 8px 24px;
-  border: 2px solid black;
+  border: 2px solid var(--text-light);
   border-radius: 12px;
   font-size: 20px;
   background: transparent;
+  color: var(--text-light);
 }

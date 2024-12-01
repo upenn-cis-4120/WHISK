@@ -3,11 +3,12 @@ body {
   font-family: "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #e6f2ff;
+  background-color: var(--outside-phone);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  color: var(--text-light);
 }
 
 .weather-app {
@@ -15,7 +16,7 @@ body {
   max-width: 400px;
   margin: 20px;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: var(--primary-bg);
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -30,13 +31,13 @@ body {
 .time-location {
   font-size: 18px;
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--text-light);
 }
 
 .city {
   font-size: 24px;
   margin: 0;
-  color: #2c3e50;
+  color: var(--text-light);
 }
 
 .status-icons {

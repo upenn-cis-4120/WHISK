@@ -1,7 +1,7 @@
 .grocery-list-container {
-  background: #8ED889;
+  background: var(--primary-blue);
   border-radius: 25px;
-  padding: 15px;
+  padding: 20px;
   margin-bottom: 20px;
 }
 
@@ -9,37 +9,35 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .grocery-list-header h2 {
   font-size: 24px;
   margin: 0;
-  color: black;
+  color: var(--text-light);
   font-weight: 400;
 }
 
-.outstanding-label {
-  background: #89CFF0;
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 16px;
+.groceries-title {
+  font-size: 24px;
+  color: var(--text-light);
+  font-weight: 400;
 }
 
 .grocery-items {
-  background: #B3B3F1;
-  border-radius: 20px;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .grocery-item {
-  background: #D86F6F;
+  background: var(--tertiary-yellow);
   border-radius: 15px;
   padding: 12px 15px;
-  margin-bottom: 8px;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
 }
 
 .checkbox-wrapper {
@@ -53,9 +51,9 @@
   -webkit-appearance: none;
   width: 24px;
   height: 24px;
-  border: 2px solid black;
+  border: 2px solid var(--text-dark);
   border-radius: 4px;
-  background: white;
+  background: var(--text-light);
   cursor: pointer;
   position: relative;
 }
@@ -67,7 +65,7 @@
   top: 3px;
   width: 6px;
   height: 12px;
-  border: solid black;
+  border: solid var(--text-dark);
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
@@ -75,29 +73,28 @@
 .item-name {
   flex: 1;
   font-size: 18px;
-  color: black;
+  color: var(--text-dark);
 }
 
 .item-quantity {
   font-size: 16px;
-  color: black;
+  color: var(--text-dark);
   min-width: 60px;
   text-align: right;
 }
 
 .see-more-btn {
-  background: #89CFF0;
-  width: 100%;
+  background: var(--action-green);
   border: none;
-  border-radius: 15px;
-  padding: 12px;
-  margin-top: 8px;
+  border-radius: 20px;
+  padding: 8px 15px;
+  color: var(--text-dark);
   font-size: 16px;
   cursor: pointer;
-  color: black;
+  display: block;
 }
 
 /* Remove last margin bottom from last grocery item */
 .grocery-item:last-of-type {
   margin-bottom: 8px;
-} 
+}
