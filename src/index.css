@@ -1,6 +1,6 @@
 :root {
   /* Color variables based on the Figma design */
-  --outside-phone: #f0f0f0;
+  --outside-phone: #e5e4d6;
   --primary-bg: #1e1e1e;
   --primary-blue: #4a90e2;
   --secondary-purple: #9c27b0;
@@ -8,7 +8,7 @@
   --tertiary-yellow: #ffcc00;
 
   --text-dark: #212121;
-  --text-light: #e0e0e0;
+  --text-light: #fdfdfd;
 
   --border-dark: #1e1e1e;
 

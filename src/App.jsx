@@ -6,6 +6,7 @@ import EventDetails from "./components/EventDetails";
 import Calendar from "./components/EventsPage";
 import FinancePage from "./components/FinancePage";
 import GroceryListPage from "./components/event/GroceryListPage";
+import CreateEvent from "./components/CreateEvent";
 import events from "./data/events";
 import "./App.css";
 
@@ -27,18 +28,113 @@ function App() {
     );
   };
 
+  const handleAddGroceryItem = (eventId, newItem) => {
+    setEventsData(prevEvents =>
+      prevEvents.map(event =>
+        event.id === eventId
+          ? {
+              ...event,
+              groceries: [...event.groceries, newItem],
+              stats: {
+                ...event.stats,
+                alerts: event.stats.alerts + 1
+              }
+            }
+          : event
+      )
+    );
+  };
+
+  const handleDeleteGroceryItem = (eventId, itemId) => {
+    setEventsData(prevEvents =>
+      prevEvents.map(event =>
+        event.id === eventId
+          ? {
+              ...event,
+              groceries: event.groceries.filter(item => item.id !== itemId),
+              stats: {
+                ...event.stats,
+                alerts: Math.max(0, event.stats.alerts - 1)
+              }
+            }
+          : event
+      )
+    );
+  };
+
+  const handleEditGroceryItem = (eventId, editedItem) => {
+    setEventsData(prevEvents =>
+      prevEvents.map(event =>
+        event.id === eventId
+          ? {
+              ...event,
+              groceries: event.groceries.map(item =>
+                item.id === editedItem.id ? editedItem : item
+              )
+            }
+          : event
+      )
+    );
+  };
+
+  const handleCreateEvent = (newEvent) => {
+    setEventsData(prevEvents => [...prevEvents, newEvent]);
+  };
+
+  const handleAddGuest = (eventId, newGuest) => {
+    setEventsData(prevEvents =>
+      prevEvents.map(event =>
+        event.id === eventId
+          ? {
+              ...event,
+              guests: [...event.guests, newGuest],
+              stats: {
+                ...event.stats,
+                guests: event.guests.length + 1
+              }
+            }
+          : event
+      )
+    );
+  };
+
+  const handleDeleteGuest = (eventId, guestId) => {
+    setEventsData(prevEvents =>
+      prevEvents.map(event =>
+        event.id === eventId
+          ? {
+              ...event,
+              guests: event.guests.filter(guest => guest.id !== guestId),
+              groceries: event.groceries.map(item =>
+                item.purchasedBy === guestId ? { ...item, purchasedBy: null } : item
+              ),
+              stats: {
+                ...event.stats,
+                guests: event.guests.length - 1
+              }
+            }
+          : event
+      )
+    );
+  };
+
   return (
     <Router>
       <div className="app">
         <Header />
         <Routes>
-          <Route path="/" element={<MainDisplay />} />
+          <Route path="/" element={<MainDisplay events={eventsData} />} />
           <Route 
             path="/event/:id" 
             element={
               <EventDetails 
                 events={eventsData}
                 onToggleGroceryItem={handleToggleGroceryItem}
+                onAddGroceryItem={handleAddGroceryItem}
+                onDeleteGroceryItem={handleDeleteGroceryItem}
+                onEditGroceryItem={handleEditGroceryItem}
+                onAddGuest={handleAddGuest}
+                onDeleteGuest={handleDeleteGuest}
               />
             } 
           />
@@ -48,6 +144,9 @@ function App() {
               <GroceryListPage 
                 events={eventsData}
                 onToggleGroceryItem={handleToggleGroceryItem}
+                onAddGroceryItem={handleAddGroceryItem}
+                onDeleteGroceryItem={handleDeleteGroceryItem}
+                onEditGroceryItem={handleEditGroceryItem}
               />
             } 
           />
@@ -56,8 +155,6 @@ function App() {
             element={
               <Calendar
                 events={eventsData}
-                onToggleGroceryItem={handleToggleGroceryItem}
-                
               />
             } 
           />
@@ -66,14 +163,17 @@ function App() {
             element={
               <FinancePage
                 events={eventsData}
-                onToggleGroceryItem={handleToggleGroceryItem}
-                
               />
             } 
           />
-          
-          
-          
+          <Route 
+            path="/create-event" 
+            element={
+              <CreateEvent
+                onCreateEvent={handleCreateEvent}
+              />
+            } 
+          />
         </Routes>
       </div>
     </Router>

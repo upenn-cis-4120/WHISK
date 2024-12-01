@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import EventCard from "./EventCard";
-import events from "../data/events";
 import "./MainDisplay.css";
 
-function MainDisplay() {
+function MainDisplay({ events }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState("");
   const navigate = useNavigate();
@@ -37,6 +37,10 @@ function MainDisplay() {
     navigate(`/finance/`);
   };
 
+  const handleNewEvent = () => {
+    navigate("/create-event");
+  };
+
   return (
     <main className="main-display">
       <div className="section-title">
@@ -56,12 +60,12 @@ function MainDisplay() {
         <button className="nav-arrow right" onClick={handleNext}>→</button>
       </div>
 
-      <button className="new-event-button">
+      <button className="new-event-button" onClick={handleNewEvent}>
         <span className="plus-icon">+</span>
         New Event
       </button>
 
-      <div className = "section-divider"></div>
+      <div className="section-divider"></div>
 
       <div className="section-title">
         <div className="title-line"></div>
@@ -75,7 +79,7 @@ function MainDisplay() {
           Financials
         </button>
         <button className="nav-button grocery">
-          <span className="icon">≡</span>
+          <span className="icon">🛒</span>
           Grocery List
         </button>
         <button className="nav-button calendar" onClick={handleEventClickCal}>
@@ -86,5 +90,19 @@ function MainDisplay() {
     </main>
   );
 }
+
+MainDisplay.propTypes = {
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      date: PropTypes.string.isRequired,
+      stats: PropTypes.shape({
+        guests: PropTypes.number.isRequired,
+        outstanding: PropTypes.number.isRequired,
+        alerts: PropTypes.number.isRequired
+      }).isRequired
+    })
+  ).isRequired
+};
 
 export default MainDisplay;

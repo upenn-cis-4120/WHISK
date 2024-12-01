@@ -179,7 +179,8 @@
   justify-content: center;
   margin-right: 15px;
   margin-left: 10px;
-  color: var(--action-green);
+  color: var(--text-dark);
+  font-size: 2.5rem;
 }
 
 /* Navigation buttons */

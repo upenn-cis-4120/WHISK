@@ -19,10 +19,78 @@
   font-weight: 400;
 }
 
-.groceries-title {
-  font-size: 24px;
-  color: var(--text-light);
-  font-weight: 400;
+.edit-list-btn {
+  background: var(--action-green);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 15px;
+  color: var(--text-dark);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-list-btn.active {
+  background: #ff4444;
+  color: white;
+  padding: 8px 12px;
+}
+
+.add-item-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  background: var(--text-light);
+  padding: 15px;
+  border-radius: 15px;
+  animation: slideDown 0.3s ease;
+}
+
+.item-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 16px;
+  background: white;
+  color: var(--text-dark);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.add-item-btn {
+  flex: 1;
+  padding: 12px;
+  background: var(--action-green);
+  border: none;
+  border-radius: 10px;
+  color: var(--text-dark);
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.cancel-btn {
+  padding: 12px 20px;
+  background: #ff4444;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.add-item-btn:hover,
+.cancel-btn:hover {
+  transform: scale(1.02);
 }
 
 .grocery-items {
@@ -32,69 +100,129 @@
 }
 
 .grocery-item {
-  background: var(--tertiary-yellow);
+  background: var(--text-light);
   border-radius: 15px;
   padding: 12px 15px;
   display: flex;
   align-items: center;
   gap: 12px;
+  transition: all 0.3s ease;
 }
 
-.checkbox-wrapper {
-  width: 24px;
-  height: 24px;
-  position: relative;
+.grocery-item.checked {
+  opacity: 0.7;
 }
 
-.grocery-checkbox {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 24px;
-  height: 24px;
-  border: 2px solid var(--text-dark);
-  border-radius: 4px;
-  background: var(--text-light);
-  cursor: pointer;
-  position: relative;
-}
-
-.grocery-checkbox:checked::after {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: 3px;
-  width: 6px;
-  height: 12px;
-  border: solid var(--text-dark);
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+.grocery-item.checked .item-name,
+.grocery-item.checked .item-quantity,
+.grocery-item.checked .item-price {
+  text-decoration: line-through;
 }
 
 .item-name {
   flex: 1;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--text-dark);
 }
 
-.item-quantity {
-  font-size: 16px;
-  color: var(--text-dark);
+.item-details {
+  position: relative;
   min-width: 60px;
   text-align: right;
 }
 
-.see-more-btn {
-  background: var(--action-green);
-  border: none;
-  border-radius: 20px;
-  padding: 8px 15px;
+.item-quantity,
+.item-price {
   color: var(--text-dark);
-  font-size: 16px;
-  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: opacity 0.3s ease;
+}
+
+.item-price {
+  display: none;
+}
+
+.grocery-item:hover .item-quantity {
+  display: none;
+}
+
+.grocery-item:hover .item-price {
   display: block;
 }
 
-/* Remove last margin bottom from last grocery item */
-.grocery-item:last-of-type {
-  margin-bottom: 8px;
+.item-actions {
+  display: none;
+  gap: 8px;
+}
+
+.grocery-item.editing .item-quantity,
+.grocery-item.editing .item-price,
+.grocery-item.editing:hover .item-quantity,
+.grocery-item.editing:hover .item-price {
+  display: none;
+}
+
+.grocery-item.editing .item-actions {
+  display: flex;
+}
+
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+  background: var(--action-green);
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #ff4444;
+  color: white;
+}
+
+.see-more-btn {
+  background: var(--secondary-purple);
+  border-radius: 15px;
+  color: var(--text-light);
+  font-size: 14px;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.see-more-btn:hover {
+  opacity: 1;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

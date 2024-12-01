@@ -5,7 +5,15 @@ import GroceryList from "./event/GroceryList";
 import RecipeExpenses from "./event/RecipeExpenses";
 import "./EventDetails.css";
 
-function EventDetails({ events, onToggleGroceryItem }) {
+function EventDetails({ 
+  events, 
+  onToggleGroceryItem, 
+  onAddGroceryItem,
+  onDeleteGroceryItem,
+  onEditGroceryItem,
+  onAddGuest, 
+  onDeleteGuest 
+}) {
   const { id } = useParams();
   const navigate = useNavigate();
   const eventData = events.find(e => e.id === parseInt(id));
@@ -13,6 +21,26 @@ function EventDetails({ events, onToggleGroceryItem }) {
   if (!eventData) {
     return <div>Event not found</div>;
   }
+
+  const handleAddGuest = (newGuest) => {
+    onAddGuest(eventData.id, newGuest);
+  };
+
+  const handleDeleteGuest = (guestId) => {
+    onDeleteGuest(eventData.id, guestId);
+  };
+
+  const handleAddGroceryItem = (newItem) => {
+    onAddGroceryItem(eventData.id, newItem);
+  };
+
+  const handleDeleteGroceryItem = (itemId) => {
+    onDeleteGroceryItem(eventData.id, itemId);
+  };
+
+  const handleEditGroceryItem = (editedItem) => {
+    onEditGroceryItem(eventData.id, editedItem);
+  };
 
   return (
     <div className="event-details">
@@ -23,10 +51,18 @@ function EventDetails({ events, onToggleGroceryItem }) {
         </div>
       </header>
 
-      <GuestList guests={eventData.guests} />
+      <GuestList 
+        guests={eventData.guests} 
+        onAddGuest={handleAddGuest}
+        onDeleteGuest={handleDeleteGuest}
+      />
       <GroceryList 
         items={eventData.groceries} 
+        guests={eventData.guests}
         onToggleItem={(itemId) => onToggleGroceryItem(eventData.id, itemId)}
+        onAddItem={handleAddGroceryItem}
+        onDeleteItem={handleDeleteGroceryItem}
+        onEditItem={handleEditGroceryItem}
       />
       <RecipeExpenses event={eventData} />
     </div>
@@ -37,6 +73,14 @@ EventDetails.propTypes = {
   events: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
+      guests: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          phone: PropTypes.string.isRequired,
+          hasResponded: PropTypes.bool.isRequired
+        })
+      ).isRequired,
       groceries: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.number.isRequired,
@@ -47,7 +91,12 @@ EventDetails.propTypes = {
       ).isRequired
     })
   ).isRequired,
-  onToggleGroceryItem: PropTypes.func.isRequired
+  onToggleGroceryItem: PropTypes.func.isRequired,
+  onAddGroceryItem: PropTypes.func.isRequired,
+  onDeleteGroceryItem: PropTypes.func.isRequired,
+  onEditGroceryItem: PropTypes.func.isRequired,
+  onAddGuest: PropTypes.func.isRequired,
+  onDeleteGuest: PropTypes.func.isRequired
 };
 
 export default EventDetails; 
