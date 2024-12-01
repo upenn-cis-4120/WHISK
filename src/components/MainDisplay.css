@@ -232,6 +232,18 @@
   color: var(--text-dark);
 }
 
+:root {
+  --nav-arrow-margin: 12px;
+}
+
+.nav-arrow.left {
+  margin-left: var(--nav-arrow-margin);
+}
+
+.nav-arrow.right {
+  margin-right: var(--nav-arrow-margin);
+}
+
 /* Responsive adjustments */
 @media (max-width: 320px) {
   .main-display {
