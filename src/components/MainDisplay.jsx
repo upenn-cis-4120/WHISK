@@ -33,6 +33,10 @@ function MainDisplay() {
     navigate(`/calendar/`);
   };
 
+  const handleEventClickFinance = () => {
+    navigate(`/finance/`);
+  };
+
   return (
     <main className="main-display">
       <div className="section-title">
@@ -64,7 +68,7 @@ function MainDisplay() {
       </div>
 
       <div className="nav-buttons">
-        <button className="nav-button financials">
+        <button className="nav-button financials" onClick={handleEventClickFinance}>
           <span className="icon">$</span>
           Financials
         </button>

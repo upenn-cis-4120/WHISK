@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import MainDisplay from "./components/MainDisplay";
 import EventDetails from "./components/EventDetails";
 import Calendar from "./components/EventsPage";
+import FinancePage from "./components/FinancePage";
 import GroceryListPage from "./components/event/GroceryListPage";
 import events from "./data/events";
 import "./App.css";
@@ -60,6 +61,19 @@ function App() {
               />
             } 
           />
+          <Route 
+            path="/finance" 
+            element={
+              <FinancePage
+                events={eventsData}
+                onToggleGroceryItem={handleToggleGroceryItem}
+                
+              />
+            } 
+          />
+          
+          
+          
         </Routes>
       </div>
     </Router>
