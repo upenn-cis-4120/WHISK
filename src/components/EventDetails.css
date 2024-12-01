@@ -1,8 +1,9 @@
 .event-details {
-  padding: 20px;
+  padding: 30px;
   background: var(--primary-bg);
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
+  width: 100%;
 }
 
 .event-header {
@@ -19,7 +20,7 @@
   cursor: pointer;
   color: var(--text-light);
   position: absolute;
-  left: 1rem;
+  left: 0;
 }
 
 .whisk-title {

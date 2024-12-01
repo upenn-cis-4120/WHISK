@@ -16,7 +16,7 @@ function GroceryListPage({ events, onToggleGroceryItem }) {
       <header className="event-header">
         <button onClick={() => navigate(`/event/${id}`)} className="back-button">←</button>
         <div className="event-date-container">
-          <div className="event-date">{eventData.date} / List</div>
+          <div className="event-date">{eventData.date} / Groceries</div>
         </div>
       </header>
 
