@@ -59,6 +59,36 @@ function GroceryList({ items, onToggleItem, onAddItem, onDeleteItem, onEditItem,
     return `$${parseFloat(price || 0).toFixed(2)}`;
   };
 
+  const handleBack = () => {
+    console.log('GroceryList: Starting navigation...');
+    navigate(`/event/${id}`);
+    console.log('GroceryList: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('GroceryList: Root element:', root);
+      console.log('GroceryList: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('GroceryList: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
+  };
+
+  const handleSeeMore = () => {
+    console.log('GroceryList: Starting navigation to full list...');
+    navigate(`/event/${id}/groceries`);
+    console.log('GroceryList: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('GroceryList: Root element:', root);
+      console.log('GroceryList: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('GroceryList: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
+  };
+
   return (
     <div className="grocery-list-container">
       <div className="grocery-list-header">
@@ -130,7 +160,7 @@ function GroceryList({ items, onToggleItem, onAddItem, onDeleteItem, onEditItem,
       )}
 
       <div className="grocery-items">
-        {items.map((item) => (
+        {items.slice(0, 3).map((item) => (
           <div key={item.id} className={`grocery-item ${item.have ? 'checked' : ''} ${isEditing ? 'editing' : ''}`}>
             <div className="checkbox-wrapper">
               <input
@@ -150,28 +180,32 @@ function GroceryList({ items, onToggleItem, onAddItem, onDeleteItem, onEditItem,
                 </span>
               )}
             </div>
-            <div className="item-actions">
-              <button 
-                onClick={() => startEditing(item)}
-                className="edit-btn"
-              >
-                ✎
-              </button>
-              <button 
-                onClick={() => onDeleteItem(item.id)}
-                className="delete-btn"
-              >
-                🗑️
-              </button>
-            </div>
+            {isEditing && (
+              <div className="item-actions">
+                <button 
+                  onClick={() => startEditing(item)}
+                  className="edit-btn"
+                >
+                  ✎
+                </button>
+                <button 
+                  onClick={() => onDeleteItem(item.id)}
+                  className="delete-btn"
+                >
+                  🗑️
+                </button>
+              </div>
+            )}
           </div>
         ))}
-        <button 
-          className="see-more-btn"
-          onClick={() => navigate(`/event/${id}/groceries`)}
-        >
-          See More
-        </button>
+        {items.length > 3 && (
+          <button 
+            className="see-more-btn"
+            onClick={handleSeeMore}
+          >
+            See {items.length - 3} more items
+          </button>
+        )}
       </div>
     </div>
   );

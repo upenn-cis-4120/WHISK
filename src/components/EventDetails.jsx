@@ -18,6 +18,21 @@ function EventDetails({
   const navigate = useNavigate();
   const eventData = events.find(e => e.id === parseInt(id));
 
+  const handleBack = () => {
+    console.log('EventDetails: Starting navigation...');
+    navigate("/");
+    console.log('EventDetails: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('EventDetails: Root element:', root);
+      console.log('EventDetails: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('EventDetails: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
+  };
+
   if (!eventData) {
     return <div>Event not found</div>;
   }
@@ -45,7 +60,7 @@ function EventDetails({
   return (
     <div className="event-details">
       <header className="event-header">
-        <button onClick={() => navigate("/")} className="back-button">←</button>
+        <button onClick={handleBack} className="back-button">←</button>
         <div className="event-date-container">
           <div className="event-date">{eventData.date} Event</div>
         </div>

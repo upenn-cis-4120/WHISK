@@ -39,7 +39,33 @@ function CreateEvent({ onCreateEvent }) {
         alerts: eventData.groceries.length
       }
     });
+    console.log('CreateEvent: Starting navigation after submit...');
     navigate("/");
+    console.log('CreateEvent: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('CreateEvent: Root element:', root);
+      console.log('CreateEvent: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('CreateEvent: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
+  };
+
+  const handleBack = () => {
+    console.log('CreateEvent: Starting back navigation...');
+    navigate("/");
+    console.log('CreateEvent: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('CreateEvent: Root element:', root);
+      console.log('CreateEvent: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('CreateEvent: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
   };
 
   const handleDateChange = (e) => {
@@ -120,7 +146,7 @@ function CreateEvent({ onCreateEvent }) {
   return (
     <div className="create-event">
       <header className="event-header">
-        <button onClick={() => navigate("/")} className="back-button">←</button>
+        <button onClick={handleBack} className="back-button">←</button>
         <div className="event-date-container">
           <div className="event-date">New Event</div>
         </div>

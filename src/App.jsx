@@ -8,6 +8,7 @@ import FinancePage from "./components/FinancePage";
 import GroceryListPage from "./components/event/GroceryListPage";
 import CreateEvent from "./components/CreateEvent";
 import Expenses from "./components/event/Expenses";
+import ScrollToTop from "./components/ScrollToTop";
 import events from "./data/events";
 import "./App.css";
 
@@ -121,6 +122,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="app">
         <Header />
         <Routes>

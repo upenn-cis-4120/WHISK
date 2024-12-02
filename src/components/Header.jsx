@@ -6,7 +6,18 @@ function Header() {
   const navigate = useNavigate();
 
   const handleHeaderClick = () => {
+    console.log('Header: Starting navigation...');
     navigate("/");
+    console.log('Header: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('Header: Root element:', root);
+      console.log('Header: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('Header: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
   };
 
   return (

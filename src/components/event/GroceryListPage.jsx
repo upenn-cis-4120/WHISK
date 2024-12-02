@@ -60,10 +60,25 @@ function GroceryListPage({ events, onToggleGroceryItem, onAddGroceryItem, onDele
     setItemInput({ name: "", quantity: "", price: "" });
   };
 
+  const handleBack = () => {
+    console.log('GroceryListPage: Starting navigation...');
+    navigate(`/event/${id}`);
+    console.log('GroceryListPage: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('GroceryListPage: Root element:', root);
+      console.log('GroceryListPage: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('GroceryListPage: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
+  };
+
   return (
     <div className="grocery-page">
       <header className="event-header">
-        <button onClick={() => navigate(`/event/${id}`)} className="back-button">←</button>
+        <button onClick={handleBack} className="back-button">←</button>
         <div className="event-date-container">
           <div className="event-date">{eventData.date} Groceries</div>
         </div>

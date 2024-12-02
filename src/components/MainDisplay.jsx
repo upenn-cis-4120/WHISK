@@ -26,19 +26,63 @@ function MainDisplay({ events }) {
   };
 
   const handleEventClick = () => {
+    console.log('MainDisplay: Starting event navigation...');
     navigate(`/event/${events[currentIndex].id}`);
+    console.log('MainDisplay: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('MainDisplay: Root element:', root);
+      console.log('MainDisplay: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('MainDisplay: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
   };
 
   const handleEventClickCal = () => {
+    console.log('MainDisplay: Starting calendar navigation...');
     navigate(`/calendar/`);
+    console.log('MainDisplay: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('MainDisplay: Root element:', root);
+      console.log('MainDisplay: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('MainDisplay: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
   };
 
   const handleEventClickFinance = () => {
+    console.log('MainDisplay: Starting finance navigation...');
     navigate(`/finance/`);
+    console.log('MainDisplay: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('MainDisplay: Root element:', root);
+      console.log('MainDisplay: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('MainDisplay: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
   };
 
   const handleNewEvent = () => {
+    console.log('MainDisplay: Starting new event navigation...');
     navigate("/create-event");
+    console.log('MainDisplay: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('MainDisplay: Root element:', root);
+      console.log('MainDisplay: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('MainDisplay: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
   };
 
   return (

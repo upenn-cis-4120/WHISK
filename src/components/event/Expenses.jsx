@@ -7,6 +7,21 @@ function Expenses({ events }) {
   const { id } = useParams();
   const eventData = events.find(e => e.id === parseInt(id));
 
+  const handleBack = () => {
+    console.log('Expenses: Starting navigation...');
+    navigate(`/event/${id}`);
+    console.log('Expenses: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('Expenses: Root element:', root);
+      console.log('Expenses: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('Expenses: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
+  };
+
   if (!eventData) {
     return <div>Event not found</div>;
   }
@@ -16,7 +31,7 @@ function Expenses({ events }) {
   return (
     <div className="expenses-section">
       <div className="expenses-header">
-        <button onClick={() => navigate(`/event/${id}`)} className="back-button">←</button>
+        <button onClick={handleBack} className="back-button">←</button>
         <div className="header-title">
           {eventData.date} Expenses
         </div>
