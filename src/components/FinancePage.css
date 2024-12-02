@@ -1,8 +1,8 @@
-.event-details {
+.finance-page {
   padding: 30px;
   background: var(--primary-bg);
   min-height: 100vh;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   width: 100%;
 }
 
@@ -11,6 +11,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  margin-bottom: 20px;
 }
 
 .back-button {
@@ -23,24 +24,10 @@
   left: -0.5rem;
 }
 
-.whisk-title {
-  font-size: 32px;
-  margin: 0;
-  color: var(--text-light);
-  font-family: 'Orienta', sans-serif;
-  font-weight: 400;
-}
-
-.search-icon {
-  font-size: 24px;
-  color: var(--text-light);
-}
-
 .event-date-container {
+  flex: 1;
   display: flex;
   justify-content: center;
-  flex: 1;
-  text-align: center;
 }
 
 .event-date {
@@ -51,3 +38,19 @@
   background: transparent;
   color: var(--text-light);
 }
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.event-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.event-link:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease;
+} 

@@ -21,7 +21,7 @@
   cursor: pointer;
   color: var(--text-light);
   position: absolute;
-  left: 0;
+  left: -0.5rem;
 }
 
 .event-date-container {

@@ -7,6 +7,7 @@ import Calendar from "./components/EventsPage";
 import FinancePage from "./components/FinancePage";
 import GroceryListPage from "./components/event/GroceryListPage";
 import CreateEvent from "./components/CreateEvent";
+import Expenses from "./components/event/Expenses";
 import events from "./data/events";
 import "./App.css";
 
@@ -147,6 +148,14 @@ function App() {
                 onAddGroceryItem={handleAddGroceryItem}
                 onDeleteGroceryItem={handleDeleteGroceryItem}
                 onEditGroceryItem={handleEditGroceryItem}
+              />
+            } 
+          />
+          <Route 
+            path="/event/:id/expenses" 
+            element={
+              <Expenses 
+                events={eventsData}
               />
             } 
           />

@@ -37,6 +37,12 @@
   padding: 15px 25px;
   text-align: center;
   min-width: 120px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.expense-box:hover {
+  transform: scale(1.05);
 }
 
 .amount {

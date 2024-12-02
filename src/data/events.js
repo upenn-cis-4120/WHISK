@@ -2,7 +2,7 @@
 const events = [
   {
     id: 1,
-    date: "Oct 28th",
+    date: "Oct 28",
     guests: [
       {
         id: 1,
@@ -66,7 +66,7 @@ const events = [
   },
   {
     id: 2,
-    date: "Nov 4th",
+    date: "Nov 4",
     guests: [
       { id: 1, name: "Sarah Chen", phone: "+1234567893", hasResponded: true },
       { id: 2, name: "Michael Park", phone: "+1234567894", hasResponded: true },
@@ -119,7 +119,7 @@ const events = [
   },
   {
     id: 3,
-    date: "Nov 11th",
+    date: "Nov 11",
     guests: [
       { id: 1, name: "Alex Johnson", phone: "+1234567897", hasResponded: true },
       { id: 2, name: "Maria Garcia", phone: "+1234567898", hasResponded: true },
@@ -176,7 +176,7 @@ const events = [
   },
   {
     id: 4,
-    date: "Nov 18th",
+    date: "Nov 18",
     guests: [
       {
         id: 1,
@@ -227,7 +227,7 @@ const events = [
   },
   {
     id: 5,
-    date: "Nov 25th",
+    date: "Nov 25",
     guests: [
       {
         id: 1,

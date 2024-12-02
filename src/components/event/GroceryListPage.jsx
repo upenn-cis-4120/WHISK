@@ -65,7 +65,7 @@ function GroceryListPage({ events, onToggleGroceryItem, onAddGroceryItem, onDele
       <header className="event-header">
         <button onClick={() => navigate(`/event/${id}`)} className="back-button">←</button>
         <div className="event-date-container">
-          <div className="event-date">{eventData.date} / Groceries</div>
+          <div className="event-date">{eventData.date} Groceries</div>
         </div>
       </header>
 

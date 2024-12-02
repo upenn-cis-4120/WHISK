@@ -1,20 +1,26 @@
-
-
 import React from 'react';
-import { Link } from 'react-router-dom';
-import EventCard from './EventCard';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FinanceCard from './FinanceCard';
+import './FinancePage.css';
 
-const EventsPage = ({ events }) => {
+const FinancePage = ({ events }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="events-page">
-      <h1 className="page-title">Financials</h1>
+    <div className="finance-page">
+      <header className="event-header">
+        <button onClick={() => navigate("/")} className="back-button">←</button>
+        <div className="event-date-container">
+          <div className="event-date">Financials</div>
+        </div>
+      </header>
+
       <div className="events-list">
         {events.map((event, index) => (
           <Link 
             key={event.id} 
-            to={`/event/${event.id}`}
+            to={`/event/${event.id}/expenses`}
             className="event-link"
           >
             <FinanceCard
@@ -28,7 +34,7 @@ const EventsPage = ({ events }) => {
   );
 };
 
-EventsPage.propTypes = {
+FinancePage.propTypes = {
   events: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -42,4 +48,4 @@ EventsPage.propTypes = {
   ).isRequired
 };
 
-export default EventsPage;
+export default FinancePage;
