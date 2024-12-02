@@ -85,6 +85,21 @@ function MainDisplay({ events }) {
     }, 0);
   };
 
+  const handleEventClickGrocery = () => {
+    console.log('MainDisplay: Starting grocery navigation...');
+    navigate("/roommates");
+    console.log('MainDisplay: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('MainDisplay: Root element:', root);
+      console.log('MainDisplay: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('MainDisplay: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
+  };
+
   return (
     <main className="main-display">
       <div className="section-title">
@@ -122,7 +137,7 @@ function MainDisplay({ events }) {
           <span className="icon">$</span>
           Financials
         </button>
-        <button className="nav-button grocery">
+        <button className="nav-button grocery" onClick={handleEventClickGrocery}>
           <span className="icon">🛒</span>
           Grocery List
         </button>

@@ -37,6 +37,21 @@ const FinancePage = ({ events }) => {
     }, 0);
   };
 
+  const handleRoommateClick = () => {
+    console.log('FinancePage: Starting roommate navigation...');
+    navigate("/roommates");
+    console.log('FinancePage: Navigation called, setting timeout...');
+    setTimeout(() => {
+      const root = document.getElementById('root');
+      console.log('FinancePage: Root element:', root);
+      console.log('FinancePage: Current scroll position:', root?.scrollTop);
+      if (root) {
+        root.scrollTo(0, 0);
+        console.log('FinancePage: Scroll attempted, new position:', root.scrollTop);
+      }
+    }, 0);
+  };
+
   return (
     <div className="finance-page">
       <header className="event-header">
@@ -47,6 +62,31 @@ const FinancePage = ({ events }) => {
       </header>
 
       <div className="events-list">
+        {/* Roommate Financials Card */}
+        <div 
+          onClick={handleRoommateClick}
+          className="event-link"
+        >
+          <div className="finance-card roommate-card">
+            <div className="card-content">
+              <div className="card-header">
+                <div className="date">Roommate Expenses</div>
+                <div className="stats">
+                  <div className="stat">
+                    <div className="stat-value">3</div>
+                    <div className="stat-label">Pending</div>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-value">$45</div>
+                    <div className="stat-label">Outstanding</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Event Finance Cards */}
         {events.map((event, index) => (
           <div 
             key={event.id} 

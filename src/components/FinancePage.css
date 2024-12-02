@@ -53,4 +53,39 @@
 .event-link:hover {
   transform: scale(1.02);
   transition: transform 0.2s ease;
+}
+
+.finance-card.roommate-card {
+  background: linear-gradient(135deg, var(--secondary-purple) 0%, var(--action-green) 100%);
+  color: var(--text-light);
+}
+
+.finance-card.roommate-card .card-header {
+  padding: 16px;
+}
+
+.finance-card.roommate-card .date {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.finance-card.roommate-card .stats {
+  display: flex;
+  gap: 24px;
+}
+
+.finance-card.roommate-card .stat {
+  text-align: center;
+}
+
+.finance-card.roommate-card .stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.finance-card.roommate-card .stat-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
 } 

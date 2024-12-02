@@ -8,6 +8,7 @@ import FinancePage from "./components/FinancePage";
 import GroceryListPage from "./components/event/GroceryListPage";
 import CreateEvent from "./components/CreateEvent";
 import Expenses from "./components/event/Expenses";
+import RoommatePage from "./components/roommates/RoommatePage";
 import ScrollToTop from "./components/ScrollToTop";
 import events from "./data/events";
 import "./App.css";
@@ -184,6 +185,10 @@ function App() {
                 onCreateEvent={handleCreateEvent}
               />
             } 
+          />
+          <Route 
+            path="/roommates" 
+            element={<RoommatePage />} 
           />
         </Routes>
       </div>
