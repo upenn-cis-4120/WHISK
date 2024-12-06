@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { calculateExpenses } from "../../utils/expenseCalculator";
 import "./Expenses.css";
 
@@ -7,20 +8,34 @@ function Expenses({ events }) {
   const navigate = useNavigate();
   const { id } = useParams();
   const eventData = events.find(e => e.id === parseInt(id));
+  const [completedPayments, setCompletedPayments] = useState(new Set());
 
   const handleBack = () => {
-    console.log('Expenses: Starting navigation...');
     navigate(`/event/${id}`);
-    console.log('Expenses: Navigation called, setting timeout...');
     setTimeout(() => {
       const root = document.getElementById('root');
-      console.log('Expenses: Root element:', root);
-      console.log('Expenses: Current scroll position:', root?.scrollTop);
       if (root) {
         root.scrollTo(0, 0);
-        console.log('Expenses: Scroll attempted, new position:', root.scrollTop);
       }
     }, 0);
+  };
+
+  const calculateUpdatedBalances = (expenses, completedPayments) => {
+    // Start with initial balances from expenses
+    const balances = { ...expenses.balances };
+    
+    // Adjust balances based on completed payments
+    completedPayments.forEach(paymentIndex => {
+      const payment = expenses.breakdown[paymentIndex];
+      if (payment) {
+        // When a payment is completed, reduce the amount owed by the payer
+        // and reduce the amount to be received by the payee
+        balances[payment.from] += payment.amount;
+        balances[payment.to] -= payment.amount;
+      }
+    });
+
+    return balances;
   };
 
   if (!eventData) {
@@ -28,10 +43,31 @@ function Expenses({ events }) {
   }
 
   const expenses = calculateExpenses(eventData);
+  const updatedBalances = calculateUpdatedBalances(expenses, completedPayments);
 
   // Sort balances by amount (positive first)
-  const sortedBalances = Object.entries(expenses.balances)
+  const sortedBalances = Object.entries(updatedBalances)
     .sort(([, a], [, b]) => b - a);
+
+  const getFirstName = (fullName) => {
+    return fullName.split(' ')[0];
+  };
+
+  const handlePaymentClick = (index) => {
+    setCompletedPayments(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
+
+  // Filter payments into pending and completed
+  const pendingPayments = expenses.breakdown.filter((_, index) => !completedPayments.has(index));
+  const completedPaymentsList = expenses.breakdown.filter((_, index) => completedPayments.has(index));
 
   return (
     <div className="expenses-section">
@@ -72,27 +108,52 @@ function Expenses({ events }) {
 
       <div className="expense-list">
         <h3>Required Payments</h3>
-        {expenses.breakdown.map((transaction, index) => (
-          <div key={index} className="expense-row">
+        {pendingPayments.map((transaction, index) => (
+          <div 
+            key={index} 
+            className="expense-row"
+            onClick={() => handlePaymentClick(expenses.breakdown.indexOf(transaction))}
+            data-action="Complete Payment"
+          >
             <div className="expense-item">
               <div className="person-info">
-                <div className="person-avatar">
-                  {transaction.from.charAt(0)}
-                </div>
                 <span className="person-name">
-                  {transaction.from} → {transaction.to}
+                  {getFirstName(transaction.from)} → {getFirstName(transaction.to)}
                 </span>
               </div>
               <span className="person-amount">${transaction.amount}</span>
             </div>
           </div>
         ))}
+        {pendingPayments.length === 0 && (
+          <div className="no-payments">
+            All payments completed! 🎉
+          </div>
+        )}
       </div>
 
-      <button className="add-payment-button">
-        <div className="button-avatar">+</div>
-        <span>Record Payment</span>
-      </button>
+      {completedPaymentsList.length > 0 && (
+        <div className="completed-payments">
+          <h3>Completed Payments</h3>
+          {completedPaymentsList.map((transaction, index) => (
+            <div 
+              key={index} 
+              className="expense-row completed"
+              onClick={() => handlePaymentClick(expenses.breakdown.indexOf(transaction))}
+              data-action="Mark as Unresolved"
+            >
+              <div className="expense-item">
+                <div className="person-info">
+                  <span className="person-name">
+                    {getFirstName(transaction.from)} → {getFirstName(transaction.to)}
+                  </span>
+                </div>
+                <span className="person-amount">${transaction.amount}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

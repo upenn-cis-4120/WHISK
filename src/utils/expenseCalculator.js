@@ -36,29 +36,32 @@ export function calculateExpenses(event) {
     });
   });
 
-  // Convert balances to a list of transactions
-  const breakdown = [];
-  const processed = new Set();
+  // Find the person with the highest positive balance to use as intermediary
+  const sortedBalances = Object.entries(balances)
+    .sort(([, a], [, b]) => b - a);
+  const [intermediary] = sortedBalances[0];
 
-  // Find people who owe money (negative balance)
-  Object.entries(balances).forEach(([fromPerson, fromBalance]) => {
-    if (fromBalance < -0.01) { // Using -0.01 to handle floating point imprecision
-      // Find people who are owed money (positive balance)
-      Object.entries(balances).forEach(([toPerson, toBalance]) => {
-        if (toBalance > 0.01 && !processed.has(`${fromPerson}-${toPerson}`)) {
-          const amount = Math.min(Math.abs(fromBalance), toBalance);
-          if (amount > 0.01) { // Only add non-zero transactions
-            breakdown.push({
-              from: fromPerson,
-              to: toPerson,
-              amount: Number(amount.toFixed(2)),
-              items: groceries
-                .filter(item => item.assignedTo === toPerson)
-                .map(item => item.name)
-            });
-            processed.add(`${fromPerson}-${toPerson}`);
-          }
-        }
+  // Convert balances to a list of optimized transactions
+  const breakdown = [];
+  
+  // First, have everyone with negative balance pay the intermediary
+  sortedBalances.forEach(([person, balance]) => {
+    if (balance < -0.01 && person !== intermediary) { // negative balance
+      breakdown.push({
+        from: person,
+        to: intermediary,
+        amount: Number(Math.abs(balance).toFixed(2))
+      });
+    }
+  });
+
+  // Then, have intermediary pay everyone with positive balance
+  sortedBalances.forEach(([person, balance]) => {
+    if (balance > 0.01 && person !== intermediary) { // positive balance
+      breakdown.push({
+        from: intermediary,
+        to: person,
+        amount: Number(balance.toFixed(2))
       });
     }
   });
