@@ -1,0 +1,205 @@
+.guest-list-container {
+  background: var(--primary-blue);
+  border-radius: 25px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.guest-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.guest-list-header h2 {
+  font-size: 24px;
+  margin: 0;
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+.invite-others-btn {
+  background: var(--action-green);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 15px;
+  color: var(--text-dark);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.invite-others-btn.active {
+  background: #ff4444;
+  color: white;
+  padding: 8px 12px;
+}
+
+.close-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.invite-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  background: var(--text-light);
+  padding: 15px;
+  border-radius: 15px;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.invite-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 16px;
+  background: white;
+  color: var(--text-dark);
+}
+
+.add-guest-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--action-green);
+  border: none;
+  border-radius: 10px;
+  color: var(--text-dark);
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.add-guest-btn:hover {
+  transform: scale(1.02);
+}
+
+.guests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.guest-item {
+  background: var(--text-light);
+  border-radius: 15px;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.guest-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  position: relative;
+}
+
+.guest-avatar {
+  width: 32px;
+  height: 32px;
+  background: var(--secondary-purple);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+  flex-shrink: 0;
+}
+
+.guest-name {
+  font-size: 16px;
+  color: var(--text-dark);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.guest-phone {
+  font-size: 16px;
+  color: var(--text-dark);
+  opacity: 0;
+  position: absolute;
+  left: 44px;
+  transition: all 0.3s ease;
+}
+
+.guest-item:hover .guest-name {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.guest-item:hover .guest-phone {
+  opacity: 0.7;
+  transform: translateY(0);
+}
+
+.guest-actions {
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transform-origin: right center;
+  transform: rotate(-90deg);
+  transition: all 0.3s ease;
+  transition-delay: 0.1s;
+}
+
+.guest-item:hover .guest-actions {
+  opacity: 1;
+  transform: rotate(0);
+}
+
+.action-btn {
+  background: var(--action-green);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+}
+
+.action-btn.delete {
+  background: #ff4444;
+  color: white;
+}
+
+.action-btn.delete:hover {
+  background: #ff2222;
+}
+
+.guest-item:last-child {
+  margin-bottom: 0;
+}
+

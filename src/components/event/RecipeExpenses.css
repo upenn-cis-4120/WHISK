@@ -1,0 +1,65 @@
+.recipe-expenses-section {
+  background: var(--primary-blue);
+  border-radius: 25px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 24px;
+  color: var(--text-light);
+  font-weight: 400;
+  margin: 0 0 20px 0;
+}
+
+.content-container {
+  background: var(--primary-blue);
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.recipe-icon {
+  background: var(--secondary-purple);
+  border-radius: 15px;
+  padding: 15px 25px;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expense-box {
+  background: var(--action-green);
+  border-radius: 15px;
+  padding: 15px 25px;
+  text-align: center;
+  min-width: 120px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.expense-box:hover {
+  transform: scale(1.05);
+}
+
+.amount {
+  font-size: 32px;
+  font-family: "Orienta", sans-serif;
+  color: var(--text-dark);
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.label {
+  font-size: 14px;
+  font-family: "Orienta", sans-serif;
+  color: var(--text-dark);
+  opacity: 0.8;
+}
+
+.icon-placeholder {
+  font-size: 48px;
+}
