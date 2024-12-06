@@ -144,23 +144,27 @@
   -webkit-appearance: none;
   width: 24px;
   height: 24px;
-  border: 2px solid black;
+  border: 2px solid var(--text-dark);
   border-radius: 4px;
   background: white;
   cursor: pointer;
   position: relative;
+  transition: all 0.2s ease;
+}
+
+.grocery-checkbox:checked {
+  background: var(--action-green);
+  border-color: var(--action-green);
 }
 
 .grocery-checkbox:checked::after {
-  content: "";
+  content: "✓";
   position: absolute;
-  left: 7px;
-  top: 3px;
-  width: 6px;
-  height: 12px;
-  border: solid black;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 16px;
 }
 
 .grocery-item-content {

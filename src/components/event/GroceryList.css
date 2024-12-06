@@ -226,3 +226,38 @@
     opacity: 1;
   }
 }
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  width: 24px;
+  margin-right: 12px;
+}
+
+.grocery-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--text-dark);
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.grocery-checkbox:checked {
+  background: var(--action-green);
+  border-color: var(--action-green);
+}
+
+.grocery-checkbox:checked::after {
+  content: "✓";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 16px;
+}

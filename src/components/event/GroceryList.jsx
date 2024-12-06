@@ -89,6 +89,10 @@ function GroceryList({ items, onToggleItem, onAddItem, onDeleteItem, onEditItem,
     }, 0);
   };
 
+  const uncheckedItems = items.filter(item => !item.have);
+  const displayedItems = uncheckedItems.slice(0, 3);
+  const remainingTotal = items.length - displayedItems.length;
+
   return (
     <div className="grocery-list-container">
       <div className="grocery-list-header">
@@ -160,8 +164,8 @@ function GroceryList({ items, onToggleItem, onAddItem, onDeleteItem, onEditItem,
       )}
 
       <div className="grocery-items">
-        {items.slice(0, 3).map((item) => (
-          <div key={item.id} className={`grocery-item ${item.have ? 'checked' : ''} ${isEditing ? 'editing' : ''}`}>
+        {displayedItems.map((item) => (
+          <div key={item.id} className={`grocery-item ${isEditing ? 'editing' : ''}`}>
             <div className="checkbox-wrapper">
               <input
                 type="checkbox"
@@ -198,12 +202,12 @@ function GroceryList({ items, onToggleItem, onAddItem, onDeleteItem, onEditItem,
             )}
           </div>
         ))}
-        {items.length > 3 && (
+        {remainingTotal > 0 && (
           <button 
             className="see-more-btn"
             onClick={handleSeeMore}
           >
-            See {items.length - 3} more items
+            See {remainingTotal} more items
           </button>
         )}
       </div>
