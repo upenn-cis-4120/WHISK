@@ -81,10 +81,16 @@ export function calculateExpenses(event) {
 
 /**
  * Get total outstanding amount for an event
- * @param {Object} event - Event object containing groceries
+ * @param {Object} event - Event object containing guests and groceries
  * @returns {number} Total outstanding amount
  */
 export function getEventOutstanding(event) {
-  const { groceries } = event;
-  return Number(groceries.reduce((sum, item) => sum + parseFloat(item.price), 0).toFixed(2));
+  const expenses = calculateExpenses(event);
+  
+  // The outstanding amount is the sum of all positive balances
+  // (or equivalently, the absolute sum of all negative balances)
+  return Object.values(expenses.balances)
+    .filter(balance => balance > 0)
+    .reduce((sum, balance) => sum + balance, 0)
+    .toFixed(2);
 } 

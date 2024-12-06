@@ -9,8 +9,10 @@ import GroceryListPage from "./components/event/GroceryListPage";
 import CreateEvent from "./components/CreateEvent";
 import Expenses from "./components/event/Expenses";
 import RoommatePage from "./components/roommates/RoommatePage";
+import RoommateExpenses from "./components/roommate/RoommateExpenses";
 import ScrollToTop from "./components/ScrollToTop";
 import events from "./data/events";
+import roommateExpenses from "./data/roommateExpenses";
 import "./App.css";
 
 function App() {
@@ -189,6 +191,15 @@ function App() {
           <Route 
             path="/roommates" 
             element={<RoommatePage />} 
+          />
+          <Route 
+            path="/roommate-expenses" 
+            element={
+              <RoommateExpenses 
+                expenses={roommateExpenses.expenses}
+                members={roommateExpenses.members}
+              />
+            } 
           />
         </Routes>
       </div>
