@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./RoommateExpenses.css";
 
-function RoommateExpenses({ expenses, members }) {
+function RoommateExpenses({ expenses, members, onAddExpense, onToggleSettled }) {
   const navigate = useNavigate();
   const [completedPayments, setCompletedPayments] = useState(new Set());
+  const [isAddingExpense, setIsAddingExpense] = useState(false);
+  const [newExpense, setNewExpense] = useState({
+    description: "",
+    amount: "",
+    paidBy: members[0].name,
+    type: "bill"
+  });
+
+  // Reset completedPayments when expenses change
+  useEffect(() => {
+    setCompletedPayments(new Set());
+  }, [expenses]);
 
   const handleBack = () => {
     console.log('RoommateExpenses: Starting navigation...');
@@ -22,8 +34,9 @@ function RoommateExpenses({ expenses, members }) {
     }, 0);
   };
 
-  // Calculate total cost and per person share
-  const total = expenses.reduce((sum, item) => sum + parseFloat(item.amount), 0);
+  // Calculate total cost and per person share for unsettled expenses
+  const unsettledExpenses = expenses.filter(expense => !expense.settled);
+  const total = unsettledExpenses.reduce((sum, item) => sum + parseFloat(item.amount), 0);
   const perPerson = total / members.length;
 
   // Calculate net balance for each person
@@ -32,17 +45,17 @@ function RoommateExpenses({ expenses, members }) {
     balances[member.name] = 0;
   });
 
-  // For each expense:
+  // For each unsettled expense:
   // - Payer gets credited for the full amount
   // - Everyone (including payer) pays their share
-  expenses.forEach(expense => {
+  unsettledExpenses.forEach(expense => {
     const amount = parseFloat(expense.amount);
     const share = amount / members.length;
 
-    // Credit the payer
+    // Credit the payer for the full amount
     balances[expense.paidBy] += amount;
 
-    // Debit everyone's share
+    // Debit everyone's share (including the payer)
     members.forEach(member => {
       balances[member.name] -= share;
     });
@@ -51,7 +64,7 @@ function RoommateExpenses({ expenses, members }) {
   // Find the person with the highest positive balance to use as intermediary
   const sortedBalances = Object.entries(balances)
     .sort(([, a], [, b]) => b - a);
-  const [intermediary] = sortedBalances[0];
+  const [intermediary] = sortedBalances[0] || [members[0].name, 0];
 
   // Convert balances to a list of optimized transactions
   const breakdown = [];
@@ -78,6 +91,24 @@ function RoommateExpenses({ expenses, members }) {
     }
   });
 
+  // Apply completed payments as offsets to balances
+  const adjustedBalances = { ...balances };
+  completedPayments.forEach(index => {
+    const payment = breakdown[index];
+    if (payment) {
+      adjustedBalances[payment.from] += payment.amount;
+      adjustedBalances[payment.to] -= payment.amount;
+    }
+  });
+
+  // Filter payments to only show those that haven't been completed
+  const pendingPayments = breakdown.filter((_, index) => !completedPayments.has(index));
+  const completedPaymentsList = breakdown.filter((_, index) => completedPayments.has(index));
+
+  // Sort balances by amount (positive first) after applying offsets
+  const sortedAdjustedBalances = Object.entries(adjustedBalances)
+    .sort(([, a], [, b]) => b - a);
+
   const handlePaymentClick = (index) => {
     setCompletedPayments(prev => {
       const newSet = new Set(prev);
@@ -90,9 +121,55 @@ function RoommateExpenses({ expenses, members }) {
     });
   };
 
-  // Filter payments into pending and completed
-  const pendingPayments = breakdown.filter((_, index) => !completedPayments.has(index));
-  const completedPaymentsList = breakdown.filter((_, index) => completedPayments.has(index));
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewExpense(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleAddExpense = () => {
+    if (newExpense.description && newExpense.amount && newExpense.paidBy) {
+      const expense = {
+        ...newExpense,
+        id: Date.now(),
+        date: new Date().toISOString().split('T')[0],
+        settled: false
+      };
+      onAddExpense(expense);
+      setNewExpense({
+        description: "",
+        amount: "",
+        paidBy: members[0].name,
+        type: "bill"
+      });
+      setIsAddingExpense(false);
+    }
+  };
+
+  const handleSettleExpense = (expenseId) => {
+    // Reset completedPayments when settling an expense
+    setCompletedPayments(new Set());
+    onToggleSettled(expenseId);
+  };
+
+  const getExpenseIcon = (type) => {
+    switch (type) {
+      case "bill": return "📄";
+      case "subscription": return "🔄";
+      case "grocery": return "🛒";
+      default: return "💰";
+    }
+  };
+
+  // Sort expenses by date, with unsettled first
+  const sortedExpenses = [...expenses].sort((a, b) => {
+    if (a.settled !== b.settled) {
+      return a.settled ? 1 : -1;
+    }
+    return new Date(b.date) - new Date(a.date);
+  });
 
   return (
     <div className="expenses-section">
@@ -116,7 +193,7 @@ function RoommateExpenses({ expenses, members }) {
 
       <div className="balances-list">
         <h3>Net Balances</h3>
-        {sortedBalances.map(([name, balance]) => (
+        {sortedAdjustedBalances.map(([name, balance]) => (
           <div key={name} className={`balance-row ${balance > 0 ? 'positive' : 'negative'}`}>
             <div className="person-info">
               <div 
@@ -186,9 +263,74 @@ function RoommateExpenses({ expenses, members }) {
       )}
 
       <div className="expense-list recent-expenses">
-        <h3>Recent Expenses</h3>
-        {expenses.map((expense) => (
-          <div key={expense.id} className="expense-row">
+        <div className="expense-list-header">
+          <h3>Recent Expenses</h3>
+          <button 
+            className="add-expense-button"
+            onClick={() => setIsAddingExpense(!isAddingExpense)}
+          >
+            {isAddingExpense ? "Cancel" : "+ Add Expense"}
+          </button>
+        </div>
+
+        {isAddingExpense && (
+          <div className="add-expense-form">
+            <input
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={newExpense.description}
+              onChange={handleInputChange}
+              className="expense-input"
+            />
+            <input
+              type="number"
+              name="amount"
+              placeholder="Amount"
+              value={newExpense.amount}
+              onChange={handleInputChange}
+              className="expense-input"
+              step="0.01"
+            />
+            <select
+              name="paidBy"
+              value={newExpense.paidBy}
+              onChange={handleInputChange}
+              className="expense-input"
+            >
+              {members.map(member => (
+                <option key={member.id} value={member.name}>
+                  {member.name}
+                </option>
+              ))}
+            </select>
+            <select
+              name="type"
+              value={newExpense.type}
+              onChange={handleInputChange}
+              className="expense-input"
+            >
+              <option value="bill">Bill</option>
+              <option value="subscription">Subscription</option>
+              <option value="grocery">Grocery</option>
+              <option value="other">Other</option>
+            </select>
+            <button 
+              onClick={handleAddExpense}
+              className="add-expense-submit"
+            >
+              Add Expense
+            </button>
+          </div>
+        )}
+
+        {sortedExpenses.map((expense) => (
+          <div 
+            key={expense.id} 
+            className={`expense-row ${expense.settled ? 'settled' : ''}`}
+            onClick={() => handleSettleExpense(expense.id)}
+            data-action={expense.settled ? "Mark as Unsettled" : "Mark as Settled"}
+          >
             <div className="expense-item">
               <div className="person-info">
                 <div 
@@ -197,14 +339,17 @@ function RoommateExpenses({ expenses, members }) {
                     background: members.find(m => m.name === expense.paidBy)?.color || 'var(--primary-bg)' 
                   }}
                 >
-                  {expense.paidBy.charAt(0)}
+                  {getExpenseIcon(expense.type)}
                 </div>
                 <div className="expense-details">
                   <span className="expense-description">{expense.description}</span>
                   <span className="expense-date">{expense.date}</span>
                 </div>
               </div>
-              <span className="person-amount">${expense.amount}</span>
+              <div className="expense-right">
+                <span className="expense-paidby">Paid by {expense.paidBy}</span>
+                <span className="person-amount">${expense.amount}</span>
+              </div>
             </div>
           </div>
         ))}
@@ -216,11 +361,13 @@ function RoommateExpenses({ expenses, members }) {
 RoommateExpenses.propTypes = {
   expenses: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
       description: PropTypes.string.isRequired,
       amount: PropTypes.string.isRequired,
       paidBy: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired
+      date: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      settled: PropTypes.bool.isRequired
     })
   ).isRequired,
   members: PropTypes.arrayOf(
@@ -229,7 +376,9 @@ RoommateExpenses.propTypes = {
       name: PropTypes.string.isRequired,
       color: PropTypes.string.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  onAddExpense: PropTypes.func.isRequired,
+  onToggleSettled: PropTypes.func.isRequired
 };
 
 export default RoommateExpenses; 

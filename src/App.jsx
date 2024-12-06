@@ -17,6 +17,24 @@ import "./App.css";
 
 function App() {
   const [eventsData, setEventsData] = useState(events);
+  const [roommateData, setRoommateData] = useState(roommateExpenses);
+
+  // Combine regular expenses with grocery items
+  const combinedRoommateExpenses = {
+    ...roommateData,
+    expenses: [
+      ...roommateData.expenses,
+      ...roommateData.groceries.map(item => ({
+        id: `grocery-${item.id}`,
+        description: `${item.name} (${item.quantity})`,
+        amount: item.price,
+        paidBy: item.addedBy,
+        date: item.addedAt,
+        type: "grocery",
+        settled: item.settled
+      }))
+    ].sort((a, b) => new Date(b.date) - new Date(a.date))
+  };
 
   const handleToggleGroceryItem = (eventId, itemId) => {
     setEventsData(prevEvents => 
@@ -123,6 +141,47 @@ function App() {
     );
   };
 
+  const handleAddRoommateExpense = (newExpense) => {
+    setRoommateData(prev => ({
+      ...prev,
+      expenses: [...prev.expenses, newExpense]
+    }));
+  };
+
+  const handleToggleExpenseSettled = (expenseId) => {
+    // Check if it's a grocery item
+    if (typeof expenseId === 'string' && expenseId.startsWith('grocery-')) {
+      const groceryId = parseInt(expenseId.split('-')[1]);
+      setRoommateData(prev => ({
+        ...prev,
+        groceries: prev.groceries.map(item =>
+          item.id === groceryId
+            ? { ...item, settled: !item.settled }
+            : item
+        )
+      }));
+    } else {
+      setRoommateData(prev => ({
+        ...prev,
+        expenses: prev.expenses.map(expense =>
+          expense.id === expenseId
+            ? { ...expense, settled: !expense.settled }
+            : expense
+        )
+      }));
+    }
+  };
+
+  const handleAddRoommateGroceryItem = (newItem) => {
+    setRoommateData(prev => ({
+      ...prev,
+      groceries: [...prev.groceries, {
+        ...newItem,
+        settled: false
+      }]
+    }));
+  };
+
   return (
     <Router>
       <ScrollToTop />
@@ -190,14 +249,21 @@ function App() {
           />
           <Route 
             path="/roommates" 
-            element={<RoommatePage />} 
+            element={
+              <RoommatePage 
+                roommates={roommateData}
+                onAddGroceryItem={handleAddRoommateGroceryItem}
+              />
+            } 
           />
           <Route 
             path="/roommate-expenses" 
             element={
               <RoommateExpenses 
-                expenses={roommateExpenses.expenses}
-                members={roommateExpenses.members}
+                expenses={combinedRoommateExpenses.expenses}
+                members={combinedRoommateExpenses.members}
+                onAddExpense={handleAddRoommateExpense}
+                onToggleSettled={handleToggleExpenseSettled}
               />
             } 
           />

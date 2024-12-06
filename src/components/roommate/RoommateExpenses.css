@@ -132,6 +132,60 @@
   margin-bottom: 20px;
 }
 
+.expense-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-expense-button {
+  background: var(--action-green);
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  color: var(--text-dark);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-expense-button:hover {
+  transform: scale(1.05);
+}
+
+.add-expense-form {
+  background: var(--text-light);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.expense-input {
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.add-expense-submit {
+  background: var(--action-green);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--text-dark);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-expense-submit:hover {
+  transform: scale(1.02);
+}
+
 .expense-row {
   margin-bottom: 12px;
   cursor: pointer;
@@ -169,6 +223,10 @@
   background: rgba(235, 87, 87, 0.95);
 }
 
+.expense-row.settled::after {
+  background: rgba(39, 174, 96, 0.95);
+}
+
 .expense-row:hover::after {
   opacity: 1;
 }
@@ -199,6 +257,18 @@
   opacity: 0.7;
 }
 
+.expense-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.expense-paidby {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
 .person-amount {
   font-size: 16px;
   font-weight: 500;
@@ -225,6 +295,14 @@
 }
 
 .expense-row.completed:hover .expense-item {
+  opacity: 1;
+}
+
+.expense-row.settled .expense-item {
+  opacity: 0.7;
+}
+
+.expense-row.settled:hover .expense-item {
   opacity: 1;
 }
 
