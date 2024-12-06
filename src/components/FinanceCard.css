@@ -1,0 +1,66 @@
+/* Card specific overrides */
+.finance-card {
+  background-color: var(--primary-blue);
+  border-radius: 25px;
+  padding: 20px 40px;
+  margin: 15px auto 5px;
+  width: calc(100% - 40px);
+  max-width: 350px;
+}
+
+.finance-card .date-header {
+  color: var(--text-dark);
+  font-size: 24px;
+  margin-bottom: 15px;
+  text-align: center;
+  text-decoration: underline;
+}
+
+/* Stats container specific layout */
+.finance-card .stats-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+}
+
+/* Specific styling for stat boxes */
+.finance-card .stat-box {
+  flex: 0 1 auto;
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  min-width: 100px;
+}
+
+.finance-card .stat-box.guests {
+  background-color: var(--secondary-purple);
+}
+
+.finance-card .stat-box.outstanding {
+  background-color: var(--action-green);
+}
+
+.finance-card .stat-number {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--text-dark);
+  margin-bottom: 5px;
+}
+
+.finance-card .stat-label {
+  display: block;
+  font-size: 14px;
+  color: var(--text-dark);
+  text-decoration: underline;
+}
+
+/* Mobile-specific overrides */
+@media (max-width: 480px) {
+  .finance-card {
+    margin: 10px auto;
+    width: calc(100% - 20px);
+    padding: 15px;
+  }
+} 

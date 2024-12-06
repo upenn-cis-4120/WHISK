@@ -200,35 +200,6 @@
   margin-left: 16px;
 }
 
-.add-payment-button {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  border: none;
-  border-radius: 15px;
-  background: var(--action-green);
-  color: var(--text-dark);
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-top: 12px;
-}
-
-.button-avatar {
-  width: 32px;
-  height: 32px;
-  background: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500;
-  color: var(--text-dark);
-  font-size: 20px;
-}
-
 .completed-payments {
   margin-top: 40px;
   background: var(--tertiary-yellow);
@@ -250,4 +221,11 @@
 
 .expense-row.completed:hover .expense-item {
   opacity: 1;
-} 
+}
+
+.no-payments {
+  color: var(--text-light);
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+}

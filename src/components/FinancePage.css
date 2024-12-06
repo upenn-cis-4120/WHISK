@@ -1,0 +1,91 @@
+.finance-page {
+  padding: 30px;
+  background: var(--primary-bg);
+  min-height: 100vh;
+  font-family: "Roboto", sans-serif;
+  width: 100%;
+}
+
+.event-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-light);
+  position: absolute;
+  left: -0.5rem;
+}
+
+.event-date-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.event-date {
+  padding: 8px 24px;
+  border: 2px solid var(--text-light);
+  border-radius: 12px;
+  font-size: 20px;
+  background: transparent;
+  color: var(--text-light);
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.event-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.event-link:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease;
+}
+
+.finance-card.roommate-card {
+  background: linear-gradient(135deg, var(--secondary-purple) 0%, var(--action-green) 100%);
+  color: var(--text-light);
+}
+
+.finance-card.roommate-card .card-header {
+  padding: 16px;
+}
+
+.finance-card.roommate-card .date {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.finance-card.roommate-card .stats {
+  display: flex;
+  gap: 24px;
+}
+
+.finance-card.roommate-card .stat {
+  text-align: center;
+}
+
+.finance-card.roommate-card .stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.finance-card.roommate-card .stat-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+} 

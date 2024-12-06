@@ -1,52 +1,88 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { calculateExpenses } from "../../utils/expenseCalculator";
-import "./Expenses.css";
+import "./RoommateFinancials.css";
 
-function Expenses({ events }) {
+function RoommateFinancials({ groceryList, roommates }) {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const eventData = events.find(e => e.id === parseInt(id));
   const [completedPayments, setCompletedPayments] = useState(new Set());
 
   const handleBack = () => {
-    navigate(`/event/${id}`);
-    setTimeout(() => {
-      const root = document.getElementById('root');
-      if (root) {
-        root.scrollTo(0, 0);
-      }
-    }, 0);
+    navigate('/');
   };
 
-  const calculateUpdatedBalances = (expenses, completedPayments) => {
-    // Start with initial balances from expenses
-    const balances = { ...expenses.balances };
+  // Calculate total cost and per person share
+  const total = groceryList.reduce((sum, item) => sum + parseFloat(item.price), 0);
+  const perPerson = total / roommates.length;
+
+  // Calculate net balance for each person
+  const balances = {};
+  roommates.forEach(roommate => {
+    balances[roommate] = 0;
+  });
+
+  // For each item:
+  // - Buyer gets credited for the full amount
+  // - Everyone (including buyer) pays their share
+  groceryList.forEach(item => {
+    const price = parseFloat(item.price);
+    const share = price / roommates.length;
+
+    // Credit the buyer
+    balances[item.assignedTo] += price;
+
+    // Debit everyone's share
+    roommates.forEach(roommate => {
+      balances[roommate] -= share;
+    });
+  });
+
+  // Find the person with the highest positive balance to use as intermediary
+  const sortedBalances = Object.entries(balances)
+    .sort(([, a], [, b]) => b - a);
+  const [intermediary] = sortedBalances[0];
+
+  // Convert balances to a list of optimized transactions
+  const breakdown = [];
+  
+  // First, have everyone with negative balance pay the intermediary
+  sortedBalances.forEach(([person, balance]) => {
+    if (balance < -0.01 && person !== intermediary) { // negative balance
+      breakdown.push({
+        from: person,
+        to: intermediary,
+        amount: Number(Math.abs(balance).toFixed(2))
+      });
+    }
+  });
+
+  // Then, have intermediary pay everyone with positive balance
+  sortedBalances.forEach(([person, balance]) => {
+    if (balance > 0.01 && person !== intermediary) { // positive balance
+      breakdown.push({
+        from: intermediary,
+        to: person,
+        amount: Number(balance.toFixed(2))
+      });
+    }
+  });
+
+  const calculateUpdatedBalances = (balances, completedPayments) => {
+    const updatedBalances = { ...balances };
     
-    // Adjust balances based on completed payments
     completedPayments.forEach(paymentIndex => {
-      const payment = expenses.breakdown[paymentIndex];
+      const payment = breakdown[paymentIndex];
       if (payment) {
-        // When a payment is completed, reduce the amount owed by the payer
-        // and reduce the amount to be received by the payee
-        balances[payment.from] += payment.amount;
-        balances[payment.to] -= payment.amount;
+        updatedBalances[payment.from] += payment.amount;
+        updatedBalances[payment.to] -= payment.amount;
       }
     });
 
-    return balances;
+    return updatedBalances;
   };
 
-  if (!eventData) {
-    return <div>Event not found</div>;
-  }
-
-  const expenses = calculateExpenses(eventData);
-  const updatedBalances = calculateUpdatedBalances(expenses, completedPayments);
-
-  // Sort balances by amount (positive first)
-  const sortedBalances = Object.entries(updatedBalances)
+  const updatedBalances = calculateUpdatedBalances(balances, completedPayments);
+  const finalSortedBalances = Object.entries(updatedBalances)
     .sort(([, a], [, b]) => b - a);
 
   const getFirstName = (fullName) => {
@@ -66,32 +102,32 @@ function Expenses({ events }) {
   };
 
   // Filter payments into pending and completed
-  const pendingPayments = expenses.breakdown.filter((_, index) => !completedPayments.has(index));
-  const completedPaymentsList = expenses.breakdown.filter((_, index) => completedPayments.has(index));
+  const pendingPayments = breakdown.filter((_, index) => !completedPayments.has(index));
+  const completedPaymentsList = breakdown.filter((_, index) => completedPayments.has(index));
 
   return (
     <div className="expenses-section">
       <div className="expenses-header">
         <button onClick={handleBack} className="back-button">←</button>
         <div className="header-title">
-          {eventData.date} Expenses
+          Roommate Expenses
         </div>
       </div>
 
       <div className="total-container">
-        <div className="total-icon">🍽️</div>
+        <div className="total-icon">🏠</div>
         <div className="total-text">
-          ${expenses.total}
+          ${total.toFixed(2)}
           <div className="total-label">Total</div>
         </div>
         <div className="per-person-text">
-          ${expenses.perPerson} per person
+          ${perPerson.toFixed(2)} per person
         </div>
       </div>
 
       <div className="balances-list">
         <h3>Net Balances</h3>
-        {sortedBalances.map(([name, balance]) => (
+        {finalSortedBalances.map(([name, balance]) => (
           <div key={name} className={`balance-row ${balance > 0 ? 'positive' : 'negative'}`}>
             <div className="person-info">
               <div className="person-avatar">
@@ -112,7 +148,7 @@ function Expenses({ events }) {
           <div 
             key={index} 
             className="expense-row"
-            onClick={() => handlePaymentClick(expenses.breakdown.indexOf(transaction))}
+            onClick={() => handlePaymentClick(breakdown.indexOf(transaction))}
             data-action="Complete Payment"
           >
             <div className="expense-item">
@@ -139,7 +175,7 @@ function Expenses({ events }) {
             <div 
               key={index} 
               className="expense-row completed"
-              onClick={() => handlePaymentClick(expenses.breakdown.indexOf(transaction))}
+              onClick={() => handlePaymentClick(breakdown.indexOf(transaction))}
               data-action="Mark as Unresolved"
             >
               <div className="expense-item">
@@ -158,29 +194,18 @@ function Expenses({ events }) {
   );
 }
 
-Expenses.propTypes = {
-  events: PropTypes.arrayOf(
+RoommateFinancials.propTypes = {
+  groceryList: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      date: PropTypes.string.isRequired,
-      guests: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.number.isRequired,
-          name: PropTypes.string.isRequired
-        })
-      ).isRequired,
-      groceries: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.number.isRequired,
-          name: PropTypes.string.isRequired,
-          price: PropTypes.string.isRequired,
-          quantity: PropTypes.string.isRequired,
-          have: PropTypes.bool.isRequired,
-          assignedTo: PropTypes.string.isRequired
-        })
-      ).isRequired
+      name: PropTypes.string.isRequired,
+      price: PropTypes.string.isRequired,
+      quantity: PropTypes.string.isRequired,
+      have: PropTypes.bool.isRequired,
+      assignedTo: PropTypes.string.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  roommates: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
-export default Expenses; 
+export default RoommateFinancials; 

@@ -1,8 +1,9 @@
 .event-details {
-  padding: 20px;
-  background: #FFE1C6;
+  padding: 30px;
+  background: var(--primary-bg);
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
+  width: 100%;
 }
 
 .event-header {
@@ -17,36 +18,36 @@
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #545863;
+  color: var(--text-light);
   position: absolute;
-  left: 1rem;
+  left: -0.5rem;
 }
 
 .whisk-title {
   font-size: 32px;
   margin: 0;
-  color: #545863;
+  color: var(--text-light);
   font-family: 'Orienta', sans-serif;
   font-weight: 400;
 }
 
 .search-icon {
   font-size: 24px;
-  color: #545863;
+  color: var(--text-light);
 }
 
 .event-date-container {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
   flex: 1;
   text-align: center;
 }
 
 .event-date {
   padding: 8px 24px;
-  border: 2px solid black;
+  border: 2px solid var(--text-light);
   border-radius: 12px;
   font-size: 20px;
   background: transparent;
+  color: var(--text-light);
 }
