@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { getEventOutstanding } from "../../utils/expenseCalculator";
 import "./RecipeExpenses.css";
 
 function RecipeExpenses({ event }) {
@@ -20,6 +21,8 @@ function RecipeExpenses({ event }) {
     }, 0);
   };
 
+  const totalOutstanding = getEventOutstanding(event);
+
   return (
     <div className="recipe-expenses-section">
       <h2 className="section-title">Recipe & Expenses</h2>
@@ -31,7 +34,7 @@ function RecipeExpenses({ event }) {
           className="expense-box"
           onClick={handleExpenseClick}
         >
-          <div className="amount">${event.expenses.total}</div>
+          <div className="amount">${totalOutstanding}</div>
           <div className="label">Outstanding</div>
         </div>
       </div>
@@ -42,9 +45,16 @@ function RecipeExpenses({ event }) {
 RecipeExpenses.propTypes = {
   event: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    expenses: PropTypes.shape({
-      total: PropTypes.number.isRequired
-    }).isRequired
+    groceries: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.string.isRequired,
+        quantity: PropTypes.string.isRequired,
+        have: PropTypes.bool.isRequired,
+        assignedTo: PropTypes.string.isRequired
+      })
+    ).isRequired
   }).isRequired
 };
 

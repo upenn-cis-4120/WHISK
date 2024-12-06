@@ -1,5 +1,6 @@
+import { useParams, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useNavigate, useParams } from "react-router-dom";
+import { calculateExpenses } from "../../utils/expenseCalculator";
 import "./Expenses.css";
 
 function Expenses({ events }) {
@@ -26,7 +27,11 @@ function Expenses({ events }) {
     return <div>Event not found</div>;
   }
 
-  const { expenses } = eventData;
+  const expenses = calculateExpenses(eventData);
+
+  // Sort balances by amount (positive first)
+  const sortedBalances = Object.entries(expenses.balances)
+    .sort(([, a], [, b]) => b - a);
 
   return (
     <div className="expenses-section">
@@ -41,21 +46,44 @@ function Expenses({ events }) {
         <div className="total-icon">🍽️</div>
         <div className="total-text">
           ${expenses.total}
-          <div className="total-label">Outstanding</div>
+          <div className="total-label">Total</div>
+        </div>
+        <div className="per-person-text">
+          ${expenses.perPerson} per person
         </div>
       </div>
 
+      <div className="balances-list">
+        <h3>Net Balances</h3>
+        {sortedBalances.map(([name, balance]) => (
+          <div key={name} className={`balance-row ${balance > 0 ? 'positive' : 'negative'}`}>
+            <div className="person-info">
+              <div className="person-avatar">
+                {name.charAt(0)}
+              </div>
+              <span className="person-name">{name}</span>
+            </div>
+            <span className="balance-amount">
+              {balance > 0 ? '+' : ''}{balance.toFixed(2)}
+            </span>
+          </div>
+        ))}
+      </div>
+
       <div className="expense-list">
-        {expenses.breakdown.map((person, index) => (
+        <h3>Required Payments</h3>
+        {expenses.breakdown.map((transaction, index) => (
           <div key={index} className="expense-row">
-            <div className={`expense-item ${person.paid ? 'checked' : ''}`}>
+            <div className="expense-item">
               <div className="person-info">
                 <div className="person-avatar">
-                  {person.name.charAt(0)}
+                  {transaction.from.charAt(0)}
                 </div>
-                <span className="person-name">{person.name}</span>
+                <span className="person-name">
+                  {transaction.from} → {transaction.to}
+                </span>
               </div>
-              <span className="person-amount">${person.amount}</span>
+              <span className="person-amount">${transaction.amount}</span>
             </div>
           </div>
         ))}
@@ -63,8 +91,7 @@ function Expenses({ events }) {
 
       <button className="add-payment-button">
         <div className="button-avatar">+</div>
-        <span>Paid by:</span>
-        <span className="amount-placeholder">$___</span>
+        <span>Record Payment</span>
       </button>
     </div>
   );
@@ -75,17 +102,22 @@ Expenses.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       date: PropTypes.string.isRequired,
-      expenses: PropTypes.shape({
-        total: PropTypes.number.isRequired,
-        perPerson: PropTypes.number.isRequired,
-        breakdown: PropTypes.arrayOf(
-          PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            amount: PropTypes.number.isRequired,
-            paid: PropTypes.bool.isRequired
-          })
-        ).isRequired
-      }).isRequired
+      guests: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired
+        })
+      ).isRequired,
+      groceries: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          price: PropTypes.string.isRequired,
+          quantity: PropTypes.string.isRequired,
+          have: PropTypes.bool.isRequired,
+          assignedTo: PropTypes.string.isRequired
+        })
+      ).isRequired
     })
   ).isRequired
 };

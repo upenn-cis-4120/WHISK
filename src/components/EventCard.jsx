@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { getEventOutstanding } from "../utils/expenseCalculator";
 import "./EventCard.css";
 
 function EventCard({ event }) {
+  const outstanding = getEventOutstanding(event);
+
   return (
     <div className="event-card">
       <h2 className="date-header">{event.date}</h2>
@@ -12,7 +15,7 @@ function EventCard({ event }) {
           <span className="stat-label">Guests</span>
         </div>
         <div className="stat-box outstanding">
-          <span className="stat-number">${event.stats.outstanding}</span>
+          <span className="stat-number">${outstanding}</span>
           <span className="stat-label">Outstanding</span>
         </div>
         <div className="stat-box alerts">
@@ -29,9 +32,18 @@ EventCard.propTypes = {
     date: PropTypes.string.isRequired,
     stats: PropTypes.shape({
       guests: PropTypes.number.isRequired,
-      outstanding: PropTypes.number.isRequired,
       alerts: PropTypes.number.isRequired
-    }).isRequired
+    }).isRequired,
+    groceries: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.string.isRequired,
+        quantity: PropTypes.string.isRequired,
+        have: PropTypes.bool.isRequired,
+        assignedTo: PropTypes.string.isRequired
+      })
+    ).isRequired
   }).isRequired
 };
 
